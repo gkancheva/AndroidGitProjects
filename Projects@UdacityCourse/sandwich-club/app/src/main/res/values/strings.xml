@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Sandwich Club</string>
+
+    <!-- Detail Activity-->
+    <string name="detail_also_known_as_label">Also known as:</string>
+    <string name="detail_place_of_origin_label">Place of origin:</string>
+    <string name="detail_description_label">Description:</string>
+    <string name="detail_ingredients_label">Ingredients:</string>
+
+    <!-- Content descriptions-->
+    <string name="sandwich_picture_content_description">Sandwich picture</string>
+
+    <!-- Error messages-->
+    <string name="detail_error_message">Sandwich data not available</string>
+
+    <!-- Json keys -->
+    <string name="json_name" translatable="false">name</string>
+    <string name="json_main_name" translatable="false">mainName</string>
+    <string name="json_also_known_as" translatable="false">alsoKnownAs</string>
+    <string name="json_place_of_origin" translatable="false">placeOfOrigin</string>
+    <string name="json_description" translatable="false">description</string>
+    <string name="json_image" translatable="false">image</string>
+    <string name="json_ingredients" translatable="false">ingredients</string>
+
+</resources>
