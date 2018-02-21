@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp"
+    tools:context="com.notesapp.activities.user.SignUpLoginActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/pencil"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/etMail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:layout_below="@+id/logo"
+        android:hint="@string/email"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:layout_below="@+id/etMail"
+        android:hint="@string/password"/>
+
+    <EditText
+        android:id="@+id/etConfirmPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:layout_below="@+id/etPassword"
+        android:hint="@string/confirm_password"/>
+
+    <Button
+        android:id="@+id/btnSignUpLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:layout_below="@+id/etConfirmPass"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/linkLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:layout_alignBaseline="@+id/btnSignUpLogin"
+        android:layout_alignBottom="@+id/btnSignUpLogin"
+        android:layout_toRightOf="@+id/btnSignUpLogin"
+        android:layout_toEndOf="@+id/btnSignUpLogin"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/colorPrimary"
+        android:clickable="true"
+        android:textSize="18sp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progress"
+        android:indeterminate="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:progress="25"/>
+
+</RelativeLayout>

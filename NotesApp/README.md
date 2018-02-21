@@ -1,0 +1,1 @@
+# Simple app for adding notes. Used Kinvey backend as a service.

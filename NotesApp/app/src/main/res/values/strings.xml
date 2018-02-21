@@ -1,0 +1,50 @@
+<resources>
+    <!-- main app strings -->
+    <string name="app_name">Notes App</string>
+    <string name="collection_name">notes</string>
+
+    <!-- sign up and login activity strings -->
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="email">Email</string>
+
+    <!-- messages and exception for sign up, login and logout user -->
+    <string name="email_required">Email required!</string>
+    <string name="invalid_email_address">Invalid email address!</string>
+    <string name="pass_required">Password required!</string>
+    <string name="confirm_pass_required">Confirm password required!</string>
+    <string name="pass_does_not_match">Password does not match!</string>
+    <string name="sign_up_fail">Email address already in use!</string>
+    <string name="user_created">User created!</string>
+    <string name="login_fail">Login fail!</string>
+    <string name="login_successful">Login successful!</string>
+    <string name="logout_successful">Logout successful!</string>
+    <string name="logout_unsuccessful">Logout unsuccessful!</string>
+
+    <!-- messages and exceptions for CRUD operations on notes -->
+    <string name="error_saving_note">Error saving note.</string>
+    <string name="error_fetching_data">Error fetching notes.</string>
+    <string name="error_deleting_note">Error deleting note.</string>
+    <string name="title_required">Title required!</string>
+    <string name="content_required">Content required!</string>
+    <string name="successfully_saved_note">Successfully saved!</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+
+    <!-- buttons and others -->
+    <string name="save">Save</string>
+    <string name="enter_editing_mode">Enter editing mode!</string>
+    <string name="more_than_one_note">There is more than 1 note with the same id</string>
+    <string name="cannot_delete_note_other_user">You can not delete a note created from another user.</string>
+    <string name="do_you_want_to_delete_note">Do you want to delete note \'%s\'?</string>
+    <string name="deleting_note">Deleting note</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_notes_to_show">No notes to show</string>
+    <string name="note">note</string>
+    <string name="click_on_title_to_edit">Click on the title or content to edit.</string>
+
+</resources>
