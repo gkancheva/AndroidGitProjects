@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ConnectTree</string>
+    <string name="play_again">Play again</string>
+    <string name="game_over">Game is over!</string>
+</resources>
