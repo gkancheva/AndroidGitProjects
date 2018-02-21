@@ -1,0 +1,1 @@
+Standalone wearable simple app for time counting.
