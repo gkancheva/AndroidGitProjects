@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin">
+    <RelativeLayout
+        android:id="@+id/DescriptionExpenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/margin">
+        <ImageView
+            android:id="@+id/icon_exp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="6dp"/>
+        <TextView
+            android:id="@+id/exp_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_exp"
+            android:textStyle="bold"
+            android:textSize="@dimen/primary_text_size"/>
+        <TextView
+            android:id="@+id/exp_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_exp"
+            android:layout_below="@id/exp_title"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_exp"
+            android:layout_below="@id/exp_category">
+            <TextView
+                android:id="@+id/exp_payment_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/primary_text_size"
+                android:layout_marginRight="@dimen/margin"/>
+            <TextView
+                android:id="@+id/exp_date_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/exp_payment_method"
+                android:textSize="@dimen/primary_text_size"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/DescriptionExpenses"
+        android:layout_weight="4"
+        android:layout_margin="@dimen/margin">
+        <TextView
+            android:id="@+id/exp_budget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/primary_text_size"/>
+        <TextView
+            android:id="@+id/none"
+            android:layout_below="@id/exp_budget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/exp_expense_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/none"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/primary_text_size"/>
+    </RelativeLayout>
+
+</LinearLayout>

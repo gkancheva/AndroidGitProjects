@@ -1,0 +1,6 @@
+Application for managing trips and events/expenses related to this trip.
+Application serves as a point of information for the trip and the starting events.
+- adding new trip + related events/expenses
+- provides notification about upcoming trip or events
+- provides information about the each expense made up to now and the total per trip
+- taking picture of an expense

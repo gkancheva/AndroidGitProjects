@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/icon_trip_name"
+            android:background="@mipmap/ic_luggage_24dp" />
+
+        <EditText android:id="@+id/add_trip_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/trip_name"
+            android:layout_marginBottom="20dp"
+            android:inputType="textCapWords"
+            android:imeOptions="actionDone"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/icon_start_date"
+            android:background="@mipmap/ic_calendar_black_24dp"/>
+
+        <EditText android:id="@+id/add_trip_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_start_date"
+            android:layout_toLeftOf="@+id/icon_end_date"
+            android:hint="@string/start_date"
+            android:textIsSelectable="true"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/icon_end_date"
+            android:background="@mipmap/ic_calendar_black_24dp"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText android:id="@+id/add_trip_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/icon_end_date"
+            android:hint="@string/end_date"
+            android:textIsSelectable="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/icon_budget"
+            android:background="@mipmap/ic_payment"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_trip_budget"
+            android:layout_toRightOf="@+id/icon_budget"
+            android:hint="@string/budget_of_the_trip"
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_trip"
+        android:id="@+id/btn_add_new_trip"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

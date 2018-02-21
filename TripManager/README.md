@@ -1,0 +1,1 @@
+Simple app managing trips, expenses and events related to it.

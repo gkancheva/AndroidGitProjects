@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="2dp"
+    android:layout_margin="@dimen/margin">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/descriptionsTrips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/margin">
+            <TextView
+                android:id="@+id/trip_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trip to Somewhere"
+                android:textStyle="bold"
+                android:textSize="@dimen/primary_text_size"/>
+            <TextView
+                android:id="@+id/trip_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trip_name"
+                android:text="Location - city, country"
+                android:textSize="@dimen/secondary_text_size"/>
+            <TextView
+                android:id="@+id/trip_dates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trip_description"
+                android:text="Feb 21, 2016 ~ Feb 24, 2016"
+                android:textSize="@dimen/secondary_text_size"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_margin="@dimen/margin">
+            <TextView
+                android:id="@+id/trip_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="@color/colorBlue"
+                android:text="500eur"
+                android:textSize="@dimen/secondary_text_size"/>
+            <TextView
+                android:id="@+id/none"
+                android:layout_below="@+id/trip_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/trip_expenses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/none"
+                android:textStyle="italic"
+                android:textColor="@color/colorRed"
+                android:text="250eur"
+                android:textSize="@dimen/secondary_text_size"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

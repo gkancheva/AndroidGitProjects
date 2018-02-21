@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/ic_new_tr_number"
+                    android:background="@mipmap/ic_content_paste_black_24dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_tr_number"
+                    android:inputType="text"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/ic_new_tr_number"
+                    android:clickable="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/ic_new_tr_company"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_tr_company"
+                    android:inputType="text"
+                    android:layout_toRightOf="@id/ic_new_tr_company"
+                    android:clickable="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/ic_new_tr_dep_point"
+                    android:background="@mipmap/ic_direction_24dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_tr_dep_point"
+                    android:inputType="text"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/ic_new_tr_dep_point"
+                    android:clickable="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/ic_new_tr_dep_date"
+                    android:background="@mipmap/ic_calendar_black_24dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_tr_dep_date"
+                    android:focusable="true"
+                    android:layout_toLeftOf="@+id/ic_new_tr_dep_time"
+                    android:layout_toRightOf="@id/ic_new_tr_dep_date"/>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@id/ic_new_tr_dep_time"
+                    android:background="@mipmap/ic_alarm_black_24dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_tr_dep_time"
+                    android:layout_toRightOf="@id/ic_new_tr_dep_time"
+                    android:focusable="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/ic_new_tr_arr_point"
+                    android:background="@mipmap/ic_direction_24dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_tr_arr_point"
+                    android:inputType="text"
+                    android:layout_toRightOf="@+id/ic_new_tr_arr_point"
+                    android:clickable="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/ic_new_tr_arr_date"
+                    android:background="@mipmap/ic_calendar_black_24dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_tr_arr_date"
+                    android:focusable="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@+id/ic_new_arr_time"
+                    android:layout_toRightOf="@+id/ic_new_tr_arr_date" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/ic_new_arr_time"
+                    android:background="@mipmap/ic_alarm_black_24dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ic_new_tr_arr_time"
+                    android:layout_toRightOf="@id/ic_new_arr_time"
+                    android:focusable="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+            <include layout="@layout/fragment_new_expense"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

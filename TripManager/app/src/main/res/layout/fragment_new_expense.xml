@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/ic_cat"
+            android:background="@mipmap/ic_content_paste_black_24dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_exp_category"
+            android:hint="Category type"
+            android:layout_toRightOf="@id/ic_cat"
+            android:focusableInTouchMode="false"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/ic_title"
+            android:background="@mipmap/ic_local_offer_black_24dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_exp_title"
+            android:hint="Title"
+            android:layout_toRightOf="@id/ic_title"
+            android:inputType="text"
+            android:clickable="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/ic_currency"
+            android:background="@mipmap/ic_money"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_exp_currency"
+            android:hint="Currency"
+            android:focusableInTouchMode="false"
+            android:layout_toLeftOf="@+id/ic_amount"
+            android:layout_toRightOf="@id/ic_currency"/>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@id/ic_amount"
+            android:background="@mipmap/ic_money"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_exp_amount"
+            android:hint="Amount"
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/ic_amount"
+            android:layout_toEndOf="@+id/ic_amount" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/ic_new_exp_payment"
+            android:background="@mipmap/ic_payment"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_exp_payment"
+            android:hint="Payment method"
+            android:layout_toRightOf="@id/ic_new_exp_payment"
+            android:focusableInTouchMode="false"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/ic_new_exp_date"
+            android:background="@mipmap/ic_date" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_exp_date"
+            android:hint="Date expense"
+            android:layout_toRightOf="@id/ic_new_exp_date" />
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/btn_add_new_exp"
+        android:layout_gravity="center_horizontal"/>
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:id="@+id/image_view"
+        android:layout_weight="0.17"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
