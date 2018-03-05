@@ -1,12 +1,14 @@
 package com.company.popularmovies.repository;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 
 import com.company.popularmovies.BuildConfig;
 import com.company.popularmovies.R;
 import com.company.popularmovies.models.Movie;
-import com.company.popularmovies.services.AsyncTaskListener;
-import com.company.popularmovies.services.GetMoviesAsyncTask;
+import com.company.popularmovies.services.MovieLoaderTask;
 import com.company.popularmovies.services.MovieRepoListener;
 import com.company.popularmovies.util.JsonUtils;
 import com.company.popularmovies.util.StringUtil;
@@ -16,19 +18,24 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.List;
 
-public class MovieRepositoryImpl implements MovieRepository, AsyncTaskListener {
+public class MovieRepositoryImpl implements MovieRepository,
+        LoaderManager.LoaderCallbacks<String> {
 
     private static final String API_KEY = BuildConfig.API_KEY;
     private static final String PAGE_SUFFIX = "&page=";
+    private static final String PATH = "path";
+    private static final int LOADER_ID = 123;
     private MovieRepoListener mListener;
     private Context mContext;
     private int mTotalPages;
     private int mCurrentPage;
     private String mCurrentOrder;
+    private LoaderManager mLoaderManager;
 
-    public MovieRepositoryImpl(MovieRepoListener listener, Context ctx) {
+    public MovieRepositoryImpl(MovieRepoListener listener, Context ctx, LoaderManager loaderManager) {
         this.mListener = listener;
         this.mContext = ctx;
+        this.mLoaderManager = loaderManager;
         this.mCurrentPage = 0;
         this.mTotalPages = -1;
     }
@@ -50,19 +57,29 @@ public class MovieRepositoryImpl implements MovieRepository, AsyncTaskListener {
         String path = StringUtil.formatPath(
                 mContext.getString(R.string.db_url_format),
                 order, API_KEY) + PAGE_SUFFIX + ++this.mCurrentPage;
-        this.executeTask(path);
+        Bundle args = new Bundle();
+        args.putString(PATH, path);
+        this.mLoaderManager.initLoader(LOADER_ID, args, this);
     }
 
     @Override
-    public void onBackgroundSuccess(String result) {
-        if(result == null) {
+    public Loader<String> onCreateLoader(int i, Bundle bundle) {
+
+        String path = bundle.getString(PATH);
+        return new MovieLoaderTask(this.mContext, path);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+        if(data == null) {
             this.mListener.onMoviesFailure();
             return;
         }
         try {
-            this.mTotalPages = JsonUtils.getTotalPages(result, this.mContext);
-            List<Movie> movies = JsonUtils.convertToMovieListObject(result, this.mContext);
+            this.mTotalPages = JsonUtils.getTotalPages(data, this.mContext);
+            List<Movie> movies = JsonUtils.convertToMovieListObject(data, this.mContext);
             this.mListener.onMoviesSuccess(movies);
+            this.mLoaderManager.destroyLoader(LOADER_ID);
             return;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -72,7 +89,9 @@ public class MovieRepositoryImpl implements MovieRepository, AsyncTaskListener {
         this.mListener.onMoviesFailure();
     }
 
-    private void executeTask(String path) {
-        new GetMoviesAsyncTask(this.mContext, this).execute(path);
+    @Override
+    public void onLoaderReset(Loader loader) {
+
     }
+
 }

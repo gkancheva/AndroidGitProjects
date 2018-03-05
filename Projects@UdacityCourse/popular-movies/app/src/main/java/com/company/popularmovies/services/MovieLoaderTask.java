@@ -3,27 +3,38 @@ package com.company.popularmovies.services;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
+import android.support.v4.content.AsyncTaskLoader;
 
 import com.company.popularmovies.util.NetworkUtils;
 
 import java.io.IOException;
 
-public class GetMoviesAsyncTask extends AsyncTask<String, Void, String> {
+public class MovieLoaderTask extends AsyncTaskLoader<String> {
 
-    private AsyncTaskListener mListener;
     private Context mContext;
+    private String mPath;
+    private String mQueryResult;
 
-    public GetMoviesAsyncTask(Context ctx, AsyncTaskListener listener) {
-        this.mListener = listener;
+    public MovieLoaderTask(Context ctx, String path) {
+        super(ctx);
         this.mContext = ctx;
+        this.mPath = path;
     }
 
     @Override
-    protected String doInBackground(String... paths) {
+    protected void onStartLoading() {
+        if(this.mQueryResult != null) {
+            deliverResult(this.mQueryResult);
+        } else {
+            forceLoad();
+        }
+    }
+
+    @Override
+    public String loadInBackground() {
         try {
             if(this.hasNetworkConnectivity()) {
-                return NetworkUtils.getHttpGETResponse(paths[0]);
+                return NetworkUtils.getHttpGETResponse(this.mPath);
             }
             return null;
         } catch (IOException e) {
@@ -33,8 +44,9 @@ public class GetMoviesAsyncTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        this.mListener.onBackgroundSuccess(result);
+    public void deliverResult(String data) {
+        this.mQueryResult = data;
+        super.deliverResult(data);
     }
 
     private boolean hasNetworkConnectivity() {

@@ -1,6 +1,8 @@
 package com.company.popularmovies;
 
 import android.content.Intent;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,7 +25,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MovieClickListener, MovieRepoListener {
+public class MainActivity extends AppCompatActivity implements
+        MovieClickListener, MovieRepoListener {
 
     private static final int NB_COLUMNS = 2;
     private static final String POPULAR_ORDER = "popular";
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        this.mMovieRepo = new MovieRepositoryImpl(this, this);
+        this.mMovieRepo = new MovieRepositoryImpl(this, this, getSupportLoaderManager());
         this.mRvMovies.setLayoutManager(new GridLayoutManager(this, NB_COLUMNS));
         this.mRvMovies.setHasFixedSize(true);
         this.mMovieAdapter = new MovieRVAdapter(this, this);
