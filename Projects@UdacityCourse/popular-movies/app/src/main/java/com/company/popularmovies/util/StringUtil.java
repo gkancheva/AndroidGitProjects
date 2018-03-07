@@ -28,4 +28,8 @@ public final class StringUtil {
     public static String formatPath(String format, String order, String appKey) {
         return String.format(LOCALE, format, order, appKey);
     }
+
+    public static String formatMessage(String format, String message) {
+        return String.format(LOCALE, format, message);
+    }
 }

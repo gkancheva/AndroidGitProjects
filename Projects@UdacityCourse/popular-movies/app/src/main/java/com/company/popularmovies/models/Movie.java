@@ -1,5 +1,6 @@
 package com.company.popularmovies.models;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,14 +9,16 @@ import java.util.Date;
 public class Movie implements Parcelable {
     private long mId;
     private String mOriginalName;
-    private  String mThumbnail;
+    private String mThumbnailPath;
+    private Bitmap mThumbnail;
     private String mOverview;
     private double mRating;
     private Date mReleaseDate;
 
-    public Movie(long id, String originalName, String thumbnail, String overview, double rating, Date releaseDate) {
+    public Movie(long id, String originalName, String thumbnailPath, Bitmap thumbnail, String overview, double rating, Date releaseDate) {
         this.mId = id;
         this.mOriginalName = originalName;
+        this.mThumbnailPath = thumbnailPath;
         this.mThumbnail = thumbnail;
         this.mOverview = overview;
         this.mRating = rating;
@@ -25,7 +28,8 @@ public class Movie implements Parcelable {
     protected Movie(Parcel in) {
         this.mId = in.readLong();
         this.mOriginalName = in.readString();
-        this.mThumbnail = in.readString();
+        this.mThumbnailPath = in.readString();
+        this.mThumbnail = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
         this.mOverview = in.readString();
         this.mRating = in.readDouble();
         long releaseDateInMilliSec = in.readLong();
@@ -60,12 +64,12 @@ public class Movie implements Parcelable {
         this.mOriginalName = originalName;
     }
 
-    public String getThumbnail() {
-        return this.mThumbnail;
+    public String getThumbnailPath() {
+        return this.mThumbnailPath;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.mThumbnail = thumbnail;
+    public void setThumbnailPath(String thumbnail) {
+        this.mThumbnailPath = thumbnail;
     }
 
     public String getOverview() {
@@ -92,6 +96,14 @@ public class Movie implements Parcelable {
         this.mReleaseDate = releaseDate;
     }
 
+    public Bitmap getThumbnail() {
+        return this.mThumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.mThumbnail = thumbnail;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -101,7 +113,8 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(this.mId);
         parcel.writeString(this.mOriginalName);
-        parcel.writeString(this.mThumbnail);
+        parcel.writeString(this.mThumbnailPath);
+        parcel.writeValue(this.mThumbnail);
         parcel.writeString(this.mOverview);
         parcel.writeDouble(this.mRating);
         parcel.writeLong(this.mReleaseDate != null ? this.mReleaseDate.getTime() : -1L);

@@ -1,8 +1,6 @@
 package com.company.popularmovies;
 
 import android.content.Intent;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final int NB_COLUMNS = 2;
     private static final String POPULAR_ORDER = "popular";
     private static final String TOP_RATED_ORDER = "top_rated";
+    private static final String FAVOURITES = " favourites";
     private MovieRVAdapter mMovieAdapter;
     private MovieRepository mMovieRepo;
     private String mOrder = POPULAR_ORDER;
@@ -52,9 +51,19 @@ public class MainActivity extends AppCompatActivity implements
         this.mRvMovies.addOnScrollListener(new ScrollListener() {
             @Override
             public void onScrollRequested() {
-                mMovieRepo.getMovies(mOrder);
+                if (!mOrder.equals(FAVOURITES)) {
+                    mMovieRepo.getMovies(mOrder);
+                }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(this.mOrder.equals(FAVOURITES)) {
+            this.mMovieRepo.getFavourites();
+        }
     }
 
     @Override
@@ -65,23 +74,26 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_change_movie_order);
-        if(this.mOrder.equals(POPULAR_ORDER)) {
-            item.setTitle(R.string.top_rated);
-        } else {
-            item.setTitle(R.string.popular);
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_change_movie_order) {
-            invalidateOptionsMenu();
-            this.mOrder = this.mOrder.equals(POPULAR_ORDER) ? TOP_RATED_ORDER : POPULAR_ORDER;
-            this.mMovieRepo.getMovies(this.mOrder);
-            this.mOrderHasChanged = true;
+        this.mOrderHasChanged = true;
+        switch (item.getItemId()) {
+            case R.id.action_show_top_rated:
+                this.mOrder = TOP_RATED_ORDER;
+                setTitle(R.string.top_rated);
+                this.mMovieRepo.getMovies(this.mOrder);
+                break;
+            case R.id.action_show_popular:
+                this.mOrder = POPULAR_ORDER;
+                setTitle(R.string.popular);
+                this.mMovieRepo.getMovies(this.mOrder);
+                break;
+            case R.id.action_favourites:
+                this.mOrder = FAVOURITES;
+                setTitle(R.string.favourites);
+                this.mMovieRepo.getFavourites();
+                break;
+            default:
+                break;
         }
         return true;
     }
@@ -95,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onMoviesSuccess(List<Movie> movies) {
-        if(this.mOrderHasChanged) {
+        if(this.mOrderHasChanged || this.mOrder.equals(FAVOURITES)) {
             this.mMovieAdapter.updateMovieList(movies);
             this.mOrderHasChanged = false;
             return;

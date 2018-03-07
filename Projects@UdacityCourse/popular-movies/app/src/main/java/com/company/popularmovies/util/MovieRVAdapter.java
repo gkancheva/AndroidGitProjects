@@ -1,6 +1,8 @@
 package com.company.popularmovies.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,8 +61,12 @@ public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.MovieVie
 
         public void bind(int position) {
             Movie movie = mMovies.get(position);
+            if(movie.getThumbnailPath() == null) {
+                this.mMoviePoster.setImageBitmap(movie.getThumbnail());
+                return;
+            }
             Picasso.with(mContext)
-                    .load(movie.getThumbnail())
+                    .load(movie.getThumbnailPath())
                     .placeholder(R.drawable.the_movie_db_logo)
                     .error(R.drawable.the_movie_db_logo)
                     .into(this.mMoviePoster);

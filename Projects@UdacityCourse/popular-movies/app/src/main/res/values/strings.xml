@@ -4,6 +4,14 @@
     <string name="title_detail_activity">Movie Detail</string>
     <string name="movie_poster">Movie poster</string>
     <string name="detail_error_message">Movie data not available</string>
+    <string name="btn_favourites">Button to save in favourites</string>
+    <string name="message_format_movie_successfully_added_to_fav">%s is successfully added to favourites!</string>
+    <string name="message_format_movie_successfully_deleted_from_fav">%s is successfully removed from favourites!</string>
+
+    <!-- Movie order strings -->
+    <string name="top_rated">Top rated</string>
+    <string name="popular">Popular</string>
+    <string name="favourites">Favourites</string>
 
     <!-- App object keys -->
     <string name="selected_movie_key" translatable="false">SELECTED_MOVIE</string>
@@ -21,9 +29,5 @@
     <string name="json_release_date_key" translatable="false">release_date</string>
     <string name="pre_thumbnail_path" translatable="false">http://image.tmdb.org/t/p/w185/</string>
     <string name="json_total_pages_key">total_pages</string>
-
-    <!-- Movie order strings -->
-    <string name="top_rated">Top rated</string>
-    <string name="popular">Popular</string>
 
 </resources>
