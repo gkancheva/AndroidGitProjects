@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
@@ -29,6 +30,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
+
+        <provider
+            android:name="com.company.popularmovies.data.MovieContentProvider"
+            android:authorities="com.company.popularmovies"
+            android:exported="false" />
+
     </application>
 
 </manifest>

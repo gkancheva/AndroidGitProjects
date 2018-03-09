@@ -3,15 +3,16 @@ package com.company.popularmovies.repository;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
 import com.company.popularmovies.BuildConfig;
 import com.company.popularmovies.R;
+import com.company.popularmovies.data.MovieDBEntry;
 import com.company.popularmovies.models.Movie;
 import com.company.popularmovies.services.MovieLoaderTask;
 import com.company.popularmovies.services.MovieRepoListener;
@@ -41,14 +42,11 @@ public class MovieRepositoryImpl implements MovieRepository,
     private int mCurrentPage;
     private String mCurrentOrder;
     private LoaderManager mLoaderManager;
-    private SQLiteDatabase mDb;
 
     public MovieRepositoryImpl(MovieRepoListener listener, Context ctx, LoaderManager loaderManager) {
         this.mListener = listener;
         this.mContext = ctx;
         this.mLoaderManager = loaderManager;
-        MovieDBHelper dbHelper = new MovieDBHelper(ctx);
-        this.mDb = dbHelper.getWritableDatabase();
         this.mCurrentPage = 0;
         this.mTotalPages = -1;
     }
@@ -77,13 +75,13 @@ public class MovieRepositoryImpl implements MovieRepository,
 
     @Override
     public Movie findByIdFromDB(long id) {
-        String query = "SELECT * FROM " + MovieDBEntry.TABLE_NAME + " WHERE _id = ?";
-        Cursor cursor = this.mDb.rawQuery(query, new String[]{id + ""});
+        Cursor cursor = this.mContext.getContentResolver().query(MovieDBEntry.getContentUriSingleRow(id),
+                null, null, null, null);
         Movie movie = null;
-        if(cursor.moveToFirst()) {
+        if(cursor != null && cursor.moveToFirst()) {
             movie = this.getOneRowFromCursor(cursor);
+            cursor.close();
         }
-        cursor.close();
         return movie;
     }
 
@@ -100,11 +98,7 @@ public class MovieRepositoryImpl implements MovieRepository,
 
     @Override
     public boolean isFavourite(long id) {
-        String query = "SELECT * FROM " + MovieDBEntry.TABLE_NAME + " WHERE _id = ?";
-        Cursor cursor = this.mDb.rawQuery(query, new String[]{id + ""});
-        boolean isFav = cursor.getCount() > 0;
-        cursor.close();
-        return isFav;
+        return this.findByIdFromDB(id) != null;
     }
 
     @Override
@@ -122,8 +116,8 @@ public class MovieRepositoryImpl implements MovieRepository,
         }
         cv.put(MovieDBEntry.COLUMN_RATING, movie.getRating());
         cv.put(MovieDBEntry.COLUMN_TIMESTAMP, movie.getReleaseDate().getTime());
-        long insert = this.mDb.insert(MovieDBEntry.TABLE_NAME, null, cv);
-        if(insert != -1) {
+        Uri uri = this.mContext.getContentResolver().insert(MovieDBEntry.CONTENT_URI, cv);
+        if(uri != null) {
             this.mListener.onMoviesSuccess(Collections.singletonList(movie));
             return;
         }
@@ -133,9 +127,9 @@ public class MovieRepositoryImpl implements MovieRepository,
     @Override
     public void removeFromFavourite(long id) {
         Movie movie = this.findByIdFromDB(id);
-        boolean isDeleted = this.mDb.delete(MovieDBEntry.TABLE_NAME,
-                MovieDBEntry._ID + "=" + id, null) > 0;
-        if(isDeleted) {
+        int deletedRows = this.mContext.getContentResolver()
+                .delete(MovieDBEntry.getContentUriSingleRow(id), null, null);
+        if(deletedRows > 0) {
             this.mListener.onMoviesSuccess(Collections.singletonList(movie));
         } else {
             this.mListener.onMoviesFailure();
@@ -175,9 +169,8 @@ public class MovieRepositoryImpl implements MovieRepository,
     }
 
     private Cursor getFavouriteMovies() {
-        return this.mDb.query(MovieDBEntry.TABLE_NAME,
-                null, null, null,
-                null, null, null);
+        return this.mContext.getContentResolver().query(MovieDBEntry.CONTENT_URI,
+                null, null, null, null);
     }
 
     private Movie getOneRowFromCursor(Cursor c) {

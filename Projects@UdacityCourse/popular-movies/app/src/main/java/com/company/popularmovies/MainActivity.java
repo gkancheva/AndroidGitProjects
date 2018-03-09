@@ -15,8 +15,8 @@ import com.company.popularmovies.repository.MovieRepository;
 import com.company.popularmovies.repository.MovieRepositoryImpl;
 import com.company.popularmovies.services.MovieClickListener;
 import com.company.popularmovies.services.MovieRepoListener;
-import com.company.popularmovies.util.MovieRVAdapter;
-import com.company.popularmovies.util.ScrollListener;
+import com.company.popularmovies.views.MovieRVAdapter;
+import com.company.popularmovies.views.ScrollListener;
 
 import java.util.List;
 

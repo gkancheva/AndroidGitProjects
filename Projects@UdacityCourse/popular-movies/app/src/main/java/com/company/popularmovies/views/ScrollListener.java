@@ -1,4 +1,4 @@
-package com.company.popularmovies.util;
+package com.company.popularmovies.views;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
