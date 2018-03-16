@@ -1,6 +1,7 @@
 package com.company.popularmovies;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements
         MovieClickListener, MovieRepoListener {
 
     private static final int NB_COLUMNS = 2;
+    private static final int NB_COLUMNS_LAND = 3;
     private static final String POPULAR_ORDER = "popular";
     private static final String TOP_RATED_ORDER = "top_rated";
     private static final String FAVOURITES = " favourites";
@@ -43,7 +45,11 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         this.mMovieRepo = new MovieRepositoryImpl(this, this, getSupportLoaderManager());
-        this.mRvMovies.setLayoutManager(new GridLayoutManager(this, NB_COLUMNS));
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.mRvMovies.setLayoutManager(new GridLayoutManager(this, NB_COLUMNS));
+        } else {
+            this.mRvMovies.setLayoutManager(new GridLayoutManager(this, NB_COLUMNS_LAND));
+        }
         this.mRvMovies.setHasFixedSize(true);
         this.mMovieAdapter = new MovieRVAdapter(this, this);
         this.mRvMovies.setAdapter(this.mMovieAdapter);
@@ -117,6 +123,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onMoviesFailure() {
-        Toast.makeText(this, getString(R.string.detail_error_message), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.main_error_message), Toast.LENGTH_SHORT).show();
     }
 }

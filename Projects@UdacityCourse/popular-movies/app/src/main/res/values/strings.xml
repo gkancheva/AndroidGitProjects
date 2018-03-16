@@ -3,10 +3,15 @@
     <string name="details_about_movie">Details about movie</string>
     <string name="title_detail_activity">Movie Detail</string>
     <string name="movie_poster">Movie poster</string>
-    <string name="detail_error_message">Movie data not available</string>
+    <string name="main_error_message">Movie`s data is not available.</string>
+    <string name="detail_error_message">Movie`s trailers and reviews are not available.</string>
     <string name="btn_favourites">Button to save in favourites</string>
     <string name="message_format_movie_successfully_added_to_fav">%s is successfully added to favourites!</string>
     <string name="message_format_movie_successfully_deleted_from_fav">%s is successfully removed from favourites!</string>
+    <string name="play_trailer">Play trailer</string>
+    <string name="reviews">Reviews:</string>
+    <string name="trailers">Trailers:</string>
+    <string name="ok">OK</string>
 
     <!-- Movie order strings -->
     <string name="top_rated">Top rated</string>
@@ -17,7 +22,10 @@
     <string name="selected_movie_key" translatable="false">SELECTED_MOVIE</string>
 
     <!-- Urls for https://www.themoviedb.org/ -->
-    <string name="db_url_format" translatable="false">http://api.themoviedb.org/3/movie/%s?api_key=%s</string>
+    <string name="url_format_movies" translatable="false">http://api.themoviedb.org/3/movie/%s?api_key=%s</string>
+    <string name="url_format_trailers" translatable="false">http://api.themoviedb.org/3/movie/%d/videos?api_key=%s</string>
+    <string name="url_format_reviews" translatable="false">http://api.themoviedb.org/3/movie/%d/reviews?api_key=%s</string>
+    <string name="url_youtube_trailer_format" translatable="false">"https://www.youtube.com/watch?v=%s"</string>
 
     <!-- Json keys -->
     <string name="json_results_key" translatable="false">results</string>
@@ -28,6 +36,11 @@
     <string name="json_overview_key" translatable="false">overview</string>
     <string name="json_release_date_key" translatable="false">release_date</string>
     <string name="pre_thumbnail_path" translatable="false">http://image.tmdb.org/t/p/w185/</string>
-    <string name="json_total_pages_key">total_pages</string>
+    <string name="json_total_pages_key" translatable="false">total_pages</string>
+    <string name="json_author_key" translatable="false">author</string>
+    <string name="json_content_key" translatable="false">content</string>
+    <string name="json_key" translatable="false">key</string>
+    <string name="json_name_key" translatable="false">name</string>
+    <string name="show_more_message">Show more</string>
 
 </resources>

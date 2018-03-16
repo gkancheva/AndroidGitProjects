@@ -14,8 +14,11 @@ import com.company.popularmovies.BuildConfig;
 import com.company.popularmovies.R;
 import com.company.popularmovies.data.MovieDBEntry;
 import com.company.popularmovies.models.Movie;
+import com.company.popularmovies.models.Review;
+import com.company.popularmovies.models.Trailer;
 import com.company.popularmovies.services.MovieLoaderTask;
 import com.company.popularmovies.services.MovieRepoListener;
+import com.company.popularmovies.services.TrailerReviewRepoListener;
 import com.company.popularmovies.util.JsonUtils;
 import com.company.popularmovies.util.NetworkUtils;
 import com.company.popularmovies.util.StringUtil;
@@ -35,8 +38,11 @@ public class MovieRepositoryImpl implements MovieRepository,
     private static final String API_KEY = BuildConfig.API_KEY;
     private static final String PAGE_SUFFIX = "&page=";
     private static final String PATH = "path";
-    private static final int LOADER_ID = 123;
-    private MovieRepoListener mListener;
+    private static final int LOADER_ID_MOVIES = 111;
+    private static final int LOADER_ID_TRAILERS = 222;
+    private static final int LOADER_ID_REVIEWS = 333;
+    private MovieRepoListener mMovieListener;
+    private TrailerReviewRepoListener mTrailerReviewListener;
     private Context mContext;
     private int mTotalPages;
     private int mCurrentPage;
@@ -44,11 +50,16 @@ public class MovieRepositoryImpl implements MovieRepository,
     private LoaderManager mLoaderManager;
 
     public MovieRepositoryImpl(MovieRepoListener listener, Context ctx, LoaderManager loaderManager) {
-        this.mListener = listener;
+        this.mMovieListener = listener;
         this.mContext = ctx;
         this.mLoaderManager = loaderManager;
         this.mCurrentPage = 0;
         this.mTotalPages = -1;
+    }
+
+    public MovieRepositoryImpl(MovieRepoListener movieListener, TrailerReviewRepoListener trailerListener, Context ctx, LoaderManager loaderManager) {
+        this(movieListener, ctx, loaderManager);
+        this.mTrailerReviewListener = trailerListener;
     }
 
     @Override
@@ -66,11 +77,27 @@ public class MovieRepositoryImpl implements MovieRepository,
             }
         }
         String path = StringUtil.formatPath(
-                mContext.getString(R.string.db_url_format),
+                mContext.getString(R.string.url_format_movies),
                 order, API_KEY) + PAGE_SUFFIX + ++this.mCurrentPage;
         Bundle args = new Bundle();
         args.putString(PATH, path);
-        this.mLoaderManager.initLoader(LOADER_ID, args, this);
+        this.mLoaderManager.initLoader(LOADER_ID_MOVIES, args, this);
+    }
+
+    @Override
+    public void getTrailers(long movieId) {
+        String path = StringUtil.formatPath(mContext.getString(R.string.url_format_trailers), movieId, API_KEY);
+        Bundle args = new Bundle();
+        args.putString(PATH, path);
+        this.mLoaderManager.initLoader(LOADER_ID_TRAILERS, args, this);
+    }
+
+    @Override
+    public void getReviews(long movieId) {
+        String path = StringUtil.formatPath(mContext.getString(R.string.url_format_reviews), movieId, API_KEY);
+        Bundle args = new Bundle();
+        args.putString(PATH, path);
+        this.mLoaderManager.initLoader(LOADER_ID_REVIEWS, args, this);
     }
 
     @Override
@@ -93,7 +120,7 @@ public class MovieRepositoryImpl implements MovieRepository,
             movies.add(this.getOneRowFromCursor(c));
         }
         c.close();
-        mListener.onMoviesSuccess(movies);
+        mMovieListener.onMoviesSuccess(movies);
     }
 
     @Override
@@ -118,10 +145,10 @@ public class MovieRepositoryImpl implements MovieRepository,
         cv.put(MovieDBEntry.COLUMN_TIMESTAMP, movie.getReleaseDate().getTime());
         Uri uri = this.mContext.getContentResolver().insert(MovieDBEntry.CONTENT_URI, cv);
         if(uri != null) {
-            this.mListener.onMoviesSuccess(Collections.singletonList(movie));
+            this.mMovieListener.onMoviesSuccess(Collections.singletonList(movie));
             return;
         }
-        this.mListener.onMoviesFailure();
+        this.mMovieListener.onMoviesFailure();
     }
 
     @Override
@@ -130,9 +157,9 @@ public class MovieRepositoryImpl implements MovieRepository,
         int deletedRows = this.mContext.getContentResolver()
                 .delete(MovieDBEntry.getContentUriSingleRow(id), null, null);
         if(deletedRows > 0) {
-            this.mListener.onMoviesSuccess(Collections.singletonList(movie));
+            this.mMovieListener.onMoviesSuccess(Collections.singletonList(movie));
         } else {
-            this.mListener.onMoviesFailure();
+            this.mMovieListener.onMoviesFailure();
         }
     }
 
@@ -144,23 +171,41 @@ public class MovieRepositoryImpl implements MovieRepository,
 
     @Override
     public void onLoadFinished(Loader<String> loader, String data) {
+        int loaderId = loader.getId();
+        this.mLoaderManager.destroyLoader(loaderId);
         if(data == null) {
-            this.mListener.onMoviesFailure();
-            this.mLoaderManager.destroyLoader(LOADER_ID);
+            this.mMovieListener.onMoviesFailure();
             return;
         }
-        try {
-            this.mTotalPages = JsonUtils.getTotalPages(data, this.mContext);
-            List<Movie> movies = JsonUtils.convertToMovieListObject(data, this.mContext);
-            this.mListener.onMoviesSuccess(movies);
-            this.mLoaderManager.destroyLoader(LOADER_ID);
-            return;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(loaderId == LOADER_ID_MOVIES) {
+            try {
+                this.mTotalPages = JsonUtils.getTotalPages(data, this.mContext);
+                List<Movie> movies = JsonUtils.convertToMovieListObject(data, this.mContext);
+                this.mMovieListener.onMoviesSuccess(movies);
+                return;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else if(loaderId == LOADER_ID_TRAILERS) {
+            try {
+                List<Trailer> trailers = JsonUtils.convertToTrailerYoutubePaths(data, this.mContext);
+                this.mTrailerReviewListener.onTrailersSuccess(trailers);
+                return;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                List<Review> reviews = JsonUtils.convertToReviews(data, this.mContext);
+                this.mTrailerReviewListener.onReviewsSuccess(reviews);
+                return;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-        this.mListener.onMoviesFailure();
+        this.mMovieListener.onMoviesFailure();
     }
 
     @Override
@@ -184,5 +229,4 @@ public class MovieRepositoryImpl implements MovieRepository,
         Date releaseDate = new Date(timestamp);
         return new Movie(id, name, null, thumbnail, overview, rating, releaseDate);
     }
-
 }

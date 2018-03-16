@@ -1,0 +1,14 @@
+<vector
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:targetApi="kitkat"
+    android:autoMirrored="true"
+    android:height="24dp"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0"
+    android:width="24dp">
+
+    <path
+        android:fillColor="@color/colorAccent"
+        android:pathData="M8,5v14l11,-7z"/>
+</vector>

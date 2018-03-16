@@ -9,4 +9,6 @@ public interface MovieRepository {
     boolean isFavourite(long id);
     void addToFavourites(Movie movie);
     void removeFromFavourite(long id);
+    void getTrailers(long movieId);
+    void getReviews(long movieId);
 }

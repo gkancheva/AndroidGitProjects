@@ -29,6 +29,10 @@ public final class StringUtil {
         return String.format(LOCALE, format, order, appKey);
     }
 
+    public static String formatPath(String format, long movieId, String appKey) {
+        return String.format(LOCALE, format, movieId, appKey);
+    }
+
     public static String formatMessage(String format, String message) {
         return String.format(LOCALE, format, message);
     }

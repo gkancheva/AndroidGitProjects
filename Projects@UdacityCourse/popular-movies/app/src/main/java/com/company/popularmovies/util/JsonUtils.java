@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.company.popularmovies.R;
 import com.company.popularmovies.models.Movie;
+import com.company.popularmovies.models.Review;
+import com.company.popularmovies.models.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,5 +41,30 @@ public class JsonUtils {
             movies.add(movie);
         }
         return movies;
+    }
+
+    public static List<Trailer> convertToTrailerYoutubePaths(String result, Context ctx) throws JSONException {
+        List<Trailer> trailers = new ArrayList<>();
+        JSONArray jsonArray = new JSONObject(result).getJSONArray(ctx.getString(R.string.json_results_key));
+        String basePath = ctx.getString(R.string.url_youtube_trailer_format);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String youtubeKey = jsonArray.getJSONObject(i).getString(ctx.getString(R.string.json_key));
+            String name = jsonArray.getJSONObject(i).getString(ctx.getString(R.string.json_name_key));
+            String youtubePath = String.format(basePath, youtubeKey);
+            trailers.add(new Trailer(youtubeKey, youtubePath, name));
+        }
+        return trailers;
+    }
+
+    public static List<Review> convertToReviews(String result, Context ctx) throws JSONException {
+        List<Review> reviews = new ArrayList<>();
+        JSONArray jsonArray = new JSONObject(result).getJSONArray(ctx.getString(R.string.json_results_key));
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String author = jsonArray.getJSONObject(i).getString(ctx.getString(R.string.json_author_key));
+            String content = jsonArray.getJSONObject(i).getString(ctx.getString(R.string.json_content_key));
+            reviews.add(new Review(author, content));
+        }
+        return reviews;
+
     }
 }

@@ -1,94 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.company.popularmovies.DetailsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/margin_padding_16dp">
+    tools:context="com.company.popularmovies.DetailsActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="224dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <TextView
-            android:id="@+id/iv_movie_title"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:padding="@dimen/margin_padding_16dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/colorWhite"
-            android:background="@color/colorAccent"
-            android:contentDescription="@string/movie_poster" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        <ImageView
-            android:id="@+id/iv_poster"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            tools:src="@drawable/the_movie_db_logo"
-            android:layout_marginTop="@dimen/margin_padding_8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="@dimen/margin_padding_16dp"
-            android:layout_marginStart="@dimen/margin_padding_16dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_movie_title"
-            android:contentDescription="@string/movie_poster" />
+            <ImageView
+                android:id="@+id/iv_movie_heading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/movie_poster"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
 
-        <TextView
-            android:id="@+id/tv_release_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="July 10, 2015"
-            android:layout_marginTop="@dimen/margin_padding_8dp"
-            android:layout_marginLeft="@dimen/margin_padding_16dp"
-            android:layout_marginStart="@dimen/margin_padding_16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/colorTextDetails"
-            app:layout_constraintTop_toBottomOf="@id/iv_movie_title"
-            app:layout_constraintLeft_toRightOf="@id/iv_poster"/>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <TextView
-            android:id="@+id/tv_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="8.2/10"
-            android:layout_marginTop="@dimen/margin_padding_8dp"
-            android:layout_marginLeft="@dimen/margin_padding_16dp"
-            android:layout_marginStart="@dimen/margin_padding_16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorTextDetails"
-            app:layout_constraintTop_toBottomOf="@id/tv_release_date"
-            app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
-            app:layout_constraintStart_toEndOf="@id/iv_poster"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
-        <TextView
-            android:id="@+id/tv_overview"
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_padding_16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill,..."
-            android:layout_marginTop="@dimen/margin_padding_8dp"
-            android:layout_marginLeft="@dimen/margin_padding_16dp"
-            android:layout_marginStart="@dimen/margin_padding_16dp"
-            android:layout_marginRight="@dimen/margin_padding_16dp"
-            android:layout_marginEnd="@dimen/margin_padding_16dp"
-            android:textSize="@dimen/text_size_small_16sp"
-            app:layout_constraintTop_toBottomOf="@id/iv_poster" />
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/btn_favourites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/btn_favourites"
-            android:layout_margin="@dimen/margin_padding_16dp"
-            tools:text="Add to favourite"
-            tools:src="@drawable/ic_favorite_24dp"
-            android:padding="8dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_rating"
-            app:layout_constraintLeft_toRightOf="@id/iv_poster"
-            app:layout_constraintStart_toEndOf="@id/iv_poster"/>
+            <ImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/movie_poster"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/the_movie_db_logo" />
 
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_padding_16dp"
+                android:layout_marginStart="@dimen/margin_padding_16dp"
+                android:textSize="@dimen/text_size_20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/iv_poster"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="July 10, 2015" />
 
-</ScrollView>
+            <TextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_padding_16dp"
+                android:layout_marginStart="@dimen/margin_padding_16dp"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
+                android:textSize="@dimen/text_size_18sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
+                app:layout_constraintStart_toEndOf="@id/iv_poster"
+                app:layout_constraintTop_toBottomOf="@id/tv_release_date"
+                tools:text="8.2/10" />
+
+            <TextView
+                android:id="@+id/tv_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_16sp"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
+                app:layout_constraintTop_toBottomOf="@id/iv_poster"
+                tools:text="Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill,..." />
+
+            <ImageButton
+                android:id="@+id/btn_favourites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_padding_16dp"
+                android:contentDescription="@string/btn_favourites"
+                android:padding="8dp"
+                app:layout_constraintLeft_toRightOf="@id/iv_poster"
+                app:layout_constraintStart_toEndOf="@id/iv_poster"
+                app:layout_constraintTop_toBottomOf="@id/tv_rating"
+                tools:src="@drawable/ic_favorite_48dp"
+                tools:text="Add to favourite" />
+
+            <View
+                android:id="@+id/v_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider_line"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview" />
+
+            <TextView
+                android:id="@+id/tv_trailers_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/trailers"
+                android:textSize="@dimen/text_size_18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
+                app:layout_constraintTop_toBottomOf="@id/v_divider"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_trailers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_trailers_label">
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_review_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reviews"
+                android:textSize="@dimen/text_size_18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
+                app:layout_constraintTop_toBottomOf="@id/rv_trailers"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_review_label">
+            </android.support.v7.widget.RecyclerView>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
