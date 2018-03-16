@@ -29,13 +29,16 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int NB_COLUMNS = 2;
     private static final int NB_COLUMNS_LAND = 3;
+    private static final String ORDER_KEY = "ORDER";
+    private static final String RV_POSITION = "RV_POSITION";
     private static final String POPULAR_ORDER = "popular";
     private static final String TOP_RATED_ORDER = "top_rated";
     private static final String FAVOURITES = " favourites";
     private MovieRVAdapter mMovieAdapter;
     private MovieRepository mMovieRepo;
-    private String mOrder = POPULAR_ORDER;
+    private String mOrder;
     private boolean mOrderHasChanged = false;
+    private int mRVPosition = -1;
 
     @BindView(R.id.rv_movies) RecyclerView mRvMovies;
 
@@ -50,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             this.mRvMovies.setLayoutManager(new GridLayoutManager(this, NB_COLUMNS_LAND));
         }
+        if(savedInstanceState != null) {
+            this.onRestoreInstanceState(savedInstanceState);
+        }
+        if(this.mOrder == null) {
+            this.mOrder = POPULAR_ORDER;
+        }
+        this.setTitle();
         this.mRvMovies.setHasFixedSize(true);
         this.mMovieAdapter = new MovieRVAdapter(this, this);
         this.mRvMovies.setAdapter(this.mMovieAdapter);
@@ -65,10 +75,27 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ORDER_KEY, this.mOrder);
+        int position = ((GridLayoutManager)this.mRvMovies.getLayoutManager())
+                .findFirstVisibleItemPosition();
+        outState.putInt(RV_POSITION, position);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.mOrder = savedInstanceState.getString(ORDER_KEY);
+        this.mRVPosition = savedInstanceState.getInt(RV_POSITION);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if(this.mOrder.equals(FAVOURITES)) {
-            this.mMovieRepo.getFavourites();
+            this.mMovieRepo.getFavourites(this.mOrder);
         }
     }
 
@@ -81,22 +108,33 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        this.mOrderHasChanged = true;
         switch (item.getItemId()) {
             case R.id.action_show_top_rated:
+                if(this.mOrder.equals(TOP_RATED_ORDER)) {
+                    break;
+                }
                 this.mOrder = TOP_RATED_ORDER;
-                setTitle(R.string.top_rated);
+                this.mOrderHasChanged = true;
+                this.setTitle();
                 this.mMovieRepo.getMovies(this.mOrder);
                 break;
             case R.id.action_show_popular:
+                if(this.mOrder.equals(POPULAR_ORDER)) {
+                    break;
+                }
                 this.mOrder = POPULAR_ORDER;
-                setTitle(R.string.popular);
+                this.mOrderHasChanged = true;
+                this.setTitle();
                 this.mMovieRepo.getMovies(this.mOrder);
                 break;
             case R.id.action_favourites:
+                if(this.mOrder.equals(FAVOURITES)) {
+                    break;
+                }
                 this.mOrder = FAVOURITES;
-                setTitle(R.string.favourites);
-                this.mMovieRepo.getFavourites();
+                this.mOrderHasChanged = true;
+                this.setTitle();
+                this.mMovieRepo.getFavourites(this.mOrder);
                 break;
             default:
                 break;
@@ -116,13 +154,25 @@ public class MainActivity extends AppCompatActivity implements
         if(this.mOrderHasChanged || this.mOrder.equals(FAVOURITES)) {
             this.mMovieAdapter.updateMovieList(movies);
             this.mOrderHasChanged = false;
-            return;
+        } else {
+            this.mMovieAdapter.addToList(movies);
         }
-        this.mMovieAdapter.addToList(movies);
+        if(this.mRVPosition != -1) {
+            this.mRvMovies.getLayoutManager().scrollToPosition(this.mRVPosition);
+        }
     }
 
     @Override
     public void onMoviesFailure() {
         Toast.makeText(this, getString(R.string.main_error_message), Toast.LENGTH_SHORT).show();
+    }
+
+    private void setTitle() {
+        switch (this.mOrder) {
+            case TOP_RATED_ORDER: setTitle(R.string.top_rated); break;
+            case POPULAR_ORDER: setTitle(R.string.popular); break;
+            case FAVOURITES: setTitle(R.string.favourites); break;
+            default: break;
+        }
     }
 }

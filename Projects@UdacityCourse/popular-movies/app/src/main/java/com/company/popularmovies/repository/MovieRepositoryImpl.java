@@ -113,7 +113,9 @@ public class MovieRepositoryImpl implements MovieRepository,
     }
 
     @Override
-    public void getFavourites() {
+    public void getFavourites(String order) {
+        this.mCurrentOrder = order;
+        this.mCurrentPage = 0;
         Cursor c = getFavouriteMovies();
         List<Movie> movies = new ArrayList<>();
         while(c.moveToNext()) {
@@ -177,35 +179,26 @@ public class MovieRepositoryImpl implements MovieRepository,
             this.mMovieListener.onMoviesFailure();
             return;
         }
-        if(loaderId == LOADER_ID_MOVIES) {
-            try {
-                this.mTotalPages = JsonUtils.getTotalPages(data, this.mContext);
-                List<Movie> movies = JsonUtils.convertToMovieListObject(data, this.mContext);
-                this.mMovieListener.onMoviesSuccess(movies);
-                return;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
+        try {
+            switch (loaderId) {
+                case LOADER_ID_MOVIES:
+                    this.mTotalPages = JsonUtils.getTotalPages(data, this.mContext);
+                    List<Movie> movies = JsonUtils.convertToMovieListObject(data, this.mContext);
+                    this.mMovieListener.onMoviesSuccess(movies);
+                    break;
+                case LOADER_ID_TRAILERS:
+                    List<Trailer> trailers = JsonUtils.convertToTrailerYoutubePaths(data, this.mContext);
+                    this.mTrailerReviewListener.onTrailersSuccess(trailers);
+                    break;
+                case LOADER_ID_REVIEWS:
+                    List<Review> reviews = JsonUtils.convertToReviews(data, this.mContext);
+                    this.mTrailerReviewListener.onReviewsSuccess(reviews);
+                    break;
             }
-        } else if(loaderId == LOADER_ID_TRAILERS) {
-            try {
-                List<Trailer> trailers = JsonUtils.convertToTrailerYoutubePaths(data, this.mContext);
-                this.mTrailerReviewListener.onTrailersSuccess(trailers);
-                return;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                List<Review> reviews = JsonUtils.convertToReviews(data, this.mContext);
-                this.mTrailerReviewListener.onReviewsSuccess(reviews);
-                return;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        } catch (JSONException | ParseException e) {
+            e.printStackTrace();
+            this.mMovieListener.onMoviesFailure();
         }
-        this.mMovieListener.onMoviesFailure();
     }
 
     @Override

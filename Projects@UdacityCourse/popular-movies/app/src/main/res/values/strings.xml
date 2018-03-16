@@ -14,9 +14,9 @@
     <string name="ok">OK</string>
 
     <!-- Movie order strings -->
-    <string name="top_rated">Top rated</string>
-    <string name="popular">Popular</string>
-    <string name="favourites">Favourites</string>
+    <string name="top_rated">Top rated movies</string>
+    <string name="popular">Popular movies</string>
+    <string name="favourites">Favourite movies</string>
 
     <!-- App object keys -->
     <string name="selected_movie_key" translatable="false">SELECTED_MOVIE</string>
