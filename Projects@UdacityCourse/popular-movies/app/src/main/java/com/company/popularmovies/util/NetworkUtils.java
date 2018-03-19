@@ -64,7 +64,7 @@ public class NetworkUtils {
     private static String getResponseInStringBuilder(HttpURLConnection conn) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        String line = "";
+        String line;
         while((line = br.readLine()) != null) {
             sb.append(line);
             break;

@@ -13,8 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class MovieContentProvider extends ContentProvider {
-    public static final int MOVIES = 100; //convention for matching whole table
-    public static final int MOVIES_WITH_ID = 101; //convention for single item
+    private static final int MOVIES = 100; //convention for matching whole table
+    private static final int MOVIES_WITH_ID = 101; //convention for single item
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private MovieDBHelper sMovieDBHelper;
@@ -32,7 +32,7 @@ public class MovieContentProvider extends ContentProvider {
                         @Nullable String selCriteria, @Nullable String[] selArguments, @Nullable String sortOrder) {
         final SQLiteDatabase db = sMovieDBHelper.getReadableDatabase();
         int match = sUriMatcher.match(uri);
-        Cursor cursor = null;
+        Cursor cursor;
         switch (match) {
             case MOVIES:
                 cursor = db.query(MovieDBEntry.TABLE_NAME, projection, selCriteria,
@@ -64,7 +64,7 @@ public class MovieContentProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues cv) {
         final SQLiteDatabase db = sMovieDBHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
-        Uri returnUri = null;
+        Uri returnUri;
         switch (match) {
             case MOVIES:
                 long id = db.insert(MovieDBEntry.TABLE_NAME, null, cv);
@@ -85,7 +85,7 @@ public class MovieContentProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String whereClause, @Nullable String[] whereArgs) {
         final SQLiteDatabase db = sMovieDBHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
-        int deletedRows = -1;
+        int deletedRows;
         switch (match) {
             case MOVIES:
                 deletedRows = db.delete(MovieDBEntry.TABLE_NAME, whereClause, whereArgs);

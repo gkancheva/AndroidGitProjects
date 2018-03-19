@@ -20,6 +20,9 @@
 
     <!-- App object keys -->
     <string name="selected_movie_key" translatable="false">SELECTED_MOVIE</string>
+    <string name="popular_order">popular</string>
+    <string name="top_rated_order">top_rated</string>
+    <string name="favourites_order">favourites</string>
 
     <!-- Urls for https://www.themoviedb.org/ -->
     <string name="url_format_movies" translatable="false">http://api.themoviedb.org/3/movie/%s?api_key=%s</string>
@@ -42,5 +45,6 @@
     <string name="json_key" translatable="false">key</string>
     <string name="json_name_key" translatable="false">name</string>
     <string name="show_more_message">Show more</string>
+    <string name="no_internet_connection">No internet connection.</string>
 
 </resources>

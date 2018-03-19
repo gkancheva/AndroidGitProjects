@@ -4,11 +4,11 @@ import com.company.popularmovies.models.Movie;
 
 public interface MovieRepository {
     void getMovies(String order);
-    Movie findByIdFromDB(long id);
+    void fetchNewPage(String order, int requestedPage);
+    boolean isFavourite(Movie movie);
     void getFavourites(String order);
-    boolean isFavourite(long id);
     void addToFavourites(Movie movie);
-    void removeFromFavourite(long id);
+    void removeFromFavourite(Movie movie);
     void getTrailers(long movieId);
     void getReviews(long movieId);
 }

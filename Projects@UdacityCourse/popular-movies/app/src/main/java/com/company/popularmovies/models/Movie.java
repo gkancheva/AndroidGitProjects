@@ -25,7 +25,7 @@ public class Movie implements Parcelable {
         this.mReleaseDate = releaseDate;
     }
 
-    protected Movie(Parcel in) {
+    private Movie(Parcel in) {
         this.mId = in.readLong();
         this.mOriginalName = in.readString();
         this.mThumbnailPath = in.readString();

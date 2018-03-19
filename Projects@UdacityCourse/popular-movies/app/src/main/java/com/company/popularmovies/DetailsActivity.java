@@ -1,6 +1,5 @@
 package com.company.popularmovies;
 
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -86,12 +85,12 @@ public class DetailsActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.btn_favourites) {
-            boolean isFav = this.mMovieRepo.isFavourite(this.mMovie.getId());
+            boolean isFav = this.mMovieRepo.isFavourite(this.mMovie);
             if(!isFav) {
                 this.mMovieRepo.addToFavourites(this.mMovie);
                 return;
             }
-            this.mMovieRepo.removeFromFavourite(this.mMovie.getId());
+            this.mMovieRepo.removeFromFavourite(this.mMovie);
         }
     }
 
@@ -106,7 +105,7 @@ public class DetailsActivity extends AppCompatActivity
 
     @Override
     public void onMoviesSuccess(List<Movie> movies) {
-        boolean isFavourite = this.mMovieRepo.isFavourite(movies.get(0).getId());
+        boolean isFavourite = this.mMovieRepo.isFavourite(movies.get(0));
         this.updateFavouriteBtn(isFavourite);
         String message = StringUtil.formatMessage(getString(R.string.message_format_movie_successfully_added_to_fav), movies.get(0).getOriginalName());
         if(!isFavourite) {
@@ -119,8 +118,8 @@ public class DetailsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMoviesFailure() {
-        Toast.makeText(this, getString(R.string.detail_error_message), Toast.LENGTH_SHORT).show();
+    public void onMoviesFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -150,11 +149,15 @@ public class DetailsActivity extends AppCompatActivity
 
     @Override
     public void onTrailerClicked(Trailer trailer) {
-        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + trailer.getYoutubeKey()));
-        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getYoutubePath()));
-        try {
+        Uri youtubeUri = Uri.parse("vnd.youtube:" + trailer.getYoutubeKey());
+        Uri webUri =  Uri.parse(trailer.getYoutubePath());
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, youtubeUri);
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, webUri);
+        if(appIntent.resolveActivity(getPackageManager()) != null){
             this.startActivity(appIntent);
-        } catch (ActivityNotFoundException e) {
+            return;
+        }
+        if(webIntent.resolveActivity(getPackageManager()) != null) {
             this.startActivity(webIntent);
         }
     }
@@ -172,7 +175,7 @@ public class DetailsActivity extends AppCompatActivity
         this.mTvReleaseDate.setText(StringUtil.formatDate(movie.getReleaseDate()));
         this.mTvRating.setText(StringUtil.formatRating(movie.getRating()));
         this.mTvOverview.setText(movie.getOverview());
-        boolean isFavourite = this.mMovieRepo.isFavourite(movie.getId());
+        boolean isFavourite = this.mMovieRepo.isFavourite(movie);
         this.updateFavouriteBtn(isFavourite);
         if(movie.getThumbnailPath() == null) {
             this.mIvMoviePoster.setImageBitmap(movie.getThumbnail());

@@ -3,7 +3,6 @@
     <dimen name="margin_padding_16dp">16dp</dimen>
     <dimen name="margin_padding_8dp">8dp</dimen>
     <dimen name="margin_padding_4dp">4dp</dimen>
-    <dimen name="text_size_movie_title">40sp</dimen>
     <dimen name="text_size_20sp">20sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="text_size_16sp">16sp</dimen>

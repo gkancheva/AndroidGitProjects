@@ -10,7 +10,7 @@ import android.view.View;
 import com.company.popularmovies.R;
 
 public class ItemDivider extends RecyclerView.ItemDecoration {
-    private Drawable mDrawable;
+    private final Drawable mDrawable;
 
     public ItemDivider(Context ctx) {
         this.mDrawable = ctx.getResources().getDrawable(R.drawable.divider_line);

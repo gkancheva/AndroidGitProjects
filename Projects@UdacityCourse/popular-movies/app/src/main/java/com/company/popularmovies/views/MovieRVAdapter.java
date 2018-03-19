@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.MovieViewHolder> {
 
     private List<Movie> mMovies;
-    private Context mContext;
+    private final Context mContext;
     private MovieClickListener mClickListener;
 
     public MovieRVAdapter(Context mContext, MovieClickListener listener) {
@@ -34,6 +34,7 @@ public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.MovieVie
     public MovieRVAdapter.MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rv_poster_item, parent, false);
+        view.setFocusable(true);
         return new MovieViewHolder(view);
     }
 

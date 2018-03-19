@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface MovieRepoListener {
     void onMoviesSuccess(List<Movie> movies);
-    void onMoviesFailure();
+    void onMoviesFailure(String message);
 }

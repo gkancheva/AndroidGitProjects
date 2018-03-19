@@ -51,7 +51,7 @@ public class TrailerRVAdapter extends RecyclerView.Adapter<TrailerRVAdapter.Trai
     public class TrailerVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.tv_trailer_name) TextView mName;
 
-        public TrailerVH(View itemView) {
+        TrailerVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
@@ -63,7 +63,7 @@ public class TrailerRVAdapter extends RecyclerView.Adapter<TrailerRVAdapter.Trai
             mClickListener.onTrailerClicked(trailer);
         }
 
-        public void bind(int position) {
+        void bind(int position) {
             Trailer trailer = mTrailers.get(position);
             this.mName.setText(trailer.getName());
         }
