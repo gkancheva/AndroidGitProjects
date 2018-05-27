@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Baking App</string>
+
+    <string name="recipes_url">https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json</string>
+    <string name="no_internet_connction">No internet connection</string>
+    <string name="recipe_image">Recipe image</string>
+    <string name="steps">Steps:</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="previous_step">Previous step</string>
+    <string name="next_step">Next step</string>
+</resources>
