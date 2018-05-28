@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorWhite">
+    android:background="@drawable/selected_rv_item">
 
     <TextView
         android:id="@+id/tv_step_description"

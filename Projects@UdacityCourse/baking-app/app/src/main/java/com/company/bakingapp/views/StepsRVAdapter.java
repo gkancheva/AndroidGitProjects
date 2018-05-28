@@ -21,12 +21,11 @@ import butterknife.ButterKnife;
 public class StepsRVAdapter extends RecyclerView.Adapter<StepsRVAdapter.StepViewHolder> {
 
     private List<Step> mSteps;
-    private final Context mContext;
     private StepClickListener mClickListener;
+    private int mSelectedPos;
 
-    public StepsRVAdapter(Context context, StepClickListener clickListener) {
+    public StepsRVAdapter(StepClickListener clickListener) {
         this.mSteps = new ArrayList<>();
-        this.mContext = context;
         this.mClickListener = clickListener;
     }
 
@@ -41,6 +40,7 @@ public class StepsRVAdapter extends RecyclerView.Adapter<StepsRVAdapter.StepView
 
     @Override
     public void onBindViewHolder(@NonNull StepViewHolder holder, int position) {
+        holder.itemView.setSelected(mSelectedPos == position);
         holder.bind(position);
     }
 
@@ -63,11 +63,15 @@ public class StepsRVAdapter extends RecyclerView.Adapter<StepsRVAdapter.StepView
             Step step = mSteps.get(position);
             String text = position + 1 + ". " + step.getShortDescription();
             this.mTvStepDescription.setText(text);
+
         }
 
         @Override
         public void onClick(View v) {
             Step step = mSteps.get(getAdapterPosition());
+            notifyItemChanged(mSelectedPos);
+            mSelectedPos = getAdapterPosition();
+            notifyItemChanged(mSelectedPos);
             mClickListener.onStepSelected(step);
         }
     }

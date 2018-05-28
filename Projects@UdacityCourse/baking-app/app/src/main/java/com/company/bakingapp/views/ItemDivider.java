@@ -16,6 +16,7 @@ public class ItemDivider extends RecyclerView.ItemDecoration{
         this.mDrawable = ctx.getResources().getDrawable(R.drawable.item_rv_divider);
     }
 
+    //this code was taken from: https://stackoverflow.com/questions/24618829/how-to-add-dividers-and-spaces-between-items-in-recyclerview
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int left = parent.getPaddingLeft();

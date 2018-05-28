@@ -37,7 +37,7 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.Reci
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rv_recipe, parent, false);
+                .inflate(R.layout.rv_card_recipe, parent, false);
         view.setFocusable(true);
         return new RecipeViewHolder(view);
     }
@@ -90,11 +90,5 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.Reci
         this.notifyItemRangeRemoved(0, itemCount);
         this.mRecipes.addAll(recipes);
         this.notifyItemRangeInserted(0, recipes.size());
-    }
-
-    public void addToList(List<Recipe> recipes) {
-        int positionStart = this.getItemCount();
-        this.mRecipes.addAll(recipes);
-        this.notifyItemRangeInserted(positionStart, recipes.size());
     }
 }

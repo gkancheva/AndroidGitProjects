@@ -8,4 +8,6 @@
     <string name="ingredients">Ingredients:</string>
     <string name="previous_step">Previous step</string>
     <string name="next_step">Next step</string>
+    <string name="recipe_load_failure">Recipes load failure!</string>
+    <string name="error_recipe_details">Error opening recipe details</string>
 </resources>

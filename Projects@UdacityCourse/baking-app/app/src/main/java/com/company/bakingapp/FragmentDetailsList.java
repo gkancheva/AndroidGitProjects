@@ -25,6 +25,8 @@ import butterknife.ButterKnife;
 public class FragmentDetailsList extends Fragment
         implements StepClickListener {
 
+    private static final String RECIPE = "RECIPE";
+
     public interface OnStepSelectedListener {
         void onStepSelected(Step step);
     }
@@ -42,13 +44,13 @@ public class FragmentDetailsList extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(savedInstanceState != null) {
-            this.mRecipe = savedInstanceState.getParcelable("RECIPE");
+            this.mRecipe = savedInstanceState.getParcelable(RECIPE);
         }
         View view = inflater.inflate(R.layout.fragment_recipe_details_list, container, false);
         ButterKnife.bind(this, view);
         this.setElements();
-        if(getArguments() != null && getArguments().getParcelable("RECIPE") != null) {
-            this.mRecipe = getArguments().getParcelable("RECIPE");
+        if(getArguments() != null && getArguments().getParcelable(RECIPE) != null) {
+            this.mRecipe = getArguments().getParcelable(RECIPE);
             this.setContent(this.mRecipe);
         }
         return view;
@@ -57,14 +59,14 @@ public class FragmentDetailsList extends Fragment
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable("RECIPE", this.mRecipe);
+        outState.putParcelable(RECIPE, this.mRecipe);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if(getArguments() != null && getArguments().getParcelable("RECIPE") != null) {
-            this.mRecipe = getArguments().getParcelable("RECIPE");
+        if(getArguments() != null && getArguments().getParcelable(RECIPE) != null) {
+            this.mRecipe = getArguments().getParcelable(RECIPE);
             this.setContent(this.mRecipe);
         } else if(this.mRecipe != null) {
             this.setContent(this.mRecipe);
@@ -78,7 +80,7 @@ public class FragmentDetailsList extends Fragment
             this.mListener = (OnStepSelectedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnImageClickListener");
+                    + " must implement OnStepSelectedListener");
         }
     }
 
@@ -94,7 +96,7 @@ public class FragmentDetailsList extends Fragment
         this.mRvSteps.addItemDecoration(new ItemDivider(getContext()));
         this.mRvSteps.setItemAnimator(new DefaultItemAnimator());
         this.mRvSteps.setHasFixedSize(true);
-        this.mStepsRVAdapter = new StepsRVAdapter(getActivity(), this);
+        this.mStepsRVAdapter = new StepsRVAdapter(this);
         this.mRvSteps.setAdapter(this.mStepsRVAdapter);
     }
 
