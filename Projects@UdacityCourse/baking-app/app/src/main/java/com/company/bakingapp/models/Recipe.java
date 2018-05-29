@@ -81,7 +81,19 @@ public class Recipe implements Parcelable {
             }
         }
         return sb.toString();
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+        if(!(obj instanceof Recipe)) {
+            return false;
+        }
+        Recipe r = (Recipe)obj;
+        return r.mId == this.getId() &&
+                r.getName().equals(this.getName());
     }
 
     protected Recipe(Parcel in) {

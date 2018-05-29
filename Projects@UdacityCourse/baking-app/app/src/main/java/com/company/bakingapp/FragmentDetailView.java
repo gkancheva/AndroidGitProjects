@@ -47,7 +47,7 @@ public class FragmentDetailView extends Fragment
     @BindView(R.id.player_view_step) SimpleExoPlayerView mPlayerView;
     @BindView(R.id.btn_previous) Button mBtnPreviousStep;
     @BindView(R.id.btn_next) Button mBtnNextStep;
-    @BindView(R.id.thumbImage)
+    @BindView(R.id.iv_thumbnail)
     ImageView mThumbnail;
     private static MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
