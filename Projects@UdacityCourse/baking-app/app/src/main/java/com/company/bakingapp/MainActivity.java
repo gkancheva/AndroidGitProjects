@@ -14,6 +14,7 @@ import com.company.bakingapp.repository.RecipeRepoImpl;
 import com.company.bakingapp.services.RecipeClickListener;
 import com.company.bakingapp.services.RecipeRepoListener;
 import com.company.bakingapp.views.RecipesRVAdapter;
+import com.company.bakingapp.widget.WidgetUpdateService;
 
 import java.util.List;
 

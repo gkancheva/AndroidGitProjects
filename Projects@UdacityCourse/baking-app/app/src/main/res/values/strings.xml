@@ -10,4 +10,9 @@
     <string name="next_step">Next step</string>
     <string name="recipe_load_failure">Recipes load failure!</string>
     <string name="error_recipe_details">Error opening recipe details</string>
+    <string name="add_widget">Add widget</string>
+    <string name="cook_today">Cook today</string>
+    <string name="ingredients_added_widget">Recipe ingredients successfully added to your cooking list.</string>
+    <string name="error_adding_recipe_to_cooking_list">Recipe`s ingredients are already added to your cooking list.</string>
+    <string name="no_info_to_show">No info to show.</string>
 </resources>

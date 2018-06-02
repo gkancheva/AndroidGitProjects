@@ -37,7 +37,8 @@ import java.util.Date;
 import java.util.List;
 
 public class MovieRepositoryImpl implements MovieRepository,
-        LoaderManager.LoaderCallbacks<String>, MovieQueryHandler.AsyncQueryListener {
+        LoaderManager.LoaderCallbacks<String>,
+        MovieQueryHandler.AsyncQueryListener {
 
     private static final String API_KEY = BuildConfig.API_KEY;
     private static final String PAGE_SUFFIX = "&page=";

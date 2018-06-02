@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.company.bakingapp.R;
 import com.company.bakingapp.models.Recipe;
 import com.company.bakingapp.services.RecipeClickListener;
-import com.company.bakingapp.utils.RecipeImageUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -57,17 +56,17 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.Reci
         @BindView(R.id.iv_recipe) ImageView mIvRecipeImage;
         @BindView(R.id.tv_recipe_name) TextView mRecipeName;
 
-        public RecipeViewHolder(View itemView) {
+        RecipeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
-        public void bind(int position) {
+        void bind(int position) {
             Recipe recipe = mRecipes.get(position);
             this.mRecipeName.setText(recipe.getName());
             if(recipe.getImage().isEmpty()) {
-                this.mIvRecipeImage.setImageResource(RecipeImageUtils.getImageResource(recipe.getName()));
+                this.mIvRecipeImage.setImageResource(R.drawable.dessert_vector);
                 return;
             }
             Picasso.with(mContext)

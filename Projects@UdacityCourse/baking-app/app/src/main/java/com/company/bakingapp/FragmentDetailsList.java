@@ -93,7 +93,7 @@ public class FragmentDetailsList extends Fragment
 
     private void setElements() {
         this.mRvSteps.setLayoutManager(new LinearLayoutManager(getActivity()));
-        this.mRvSteps.addItemDecoration(new ItemDivider(getContext()));
+        this.mRvSteps.addItemDecoration(new ItemDivider(getActivity()));
         this.mRvSteps.setItemAnimator(new DefaultItemAnimator());
         this.mRvSteps.setHasFixedSize(true);
         this.mStepsRVAdapter = new StepsRVAdapter(this);
@@ -101,6 +101,7 @@ public class FragmentDetailsList extends Fragment
     }
 
     public void setContent(Recipe recipe) {
+        getActivity().setTitle(recipe.getName());
         this.mTvIngredients.setText(recipe.getIngredientsAsText());
         this.mStepsRVAdapter.updateStepList(recipe.getSteps());
     }

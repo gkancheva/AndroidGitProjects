@@ -1,6 +1,5 @@
 package com.company.bakingapp.views;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,13 +52,13 @@ public class StepsRVAdapter extends RecyclerView.Adapter<StepsRVAdapter.StepView
 
         @BindView(R.id.tv_step_description) TextView mTvStepDescription;
 
-        public StepViewHolder(View itemView) {
+        StepViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
-        public void bind(int position) {
+        void bind(int position) {
             Step step = mSteps.get(position);
             String text = position + 1 + ". " + step.getShortDescription();
             this.mTvStepDescription.setText(text);
