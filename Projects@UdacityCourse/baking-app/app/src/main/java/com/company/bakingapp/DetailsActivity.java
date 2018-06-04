@@ -1,6 +1,7 @@
 package com.company.bakingapp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import java.util.List;
 public class DetailsActivity extends AppCompatActivity
     implements FragmentDetailsList.OnStepSelectedListener, RecipeRepoListener {
 
+    private static final String FRAGMENT_DETAILS_VIEW_TAG = "FRAGMENT_DETAILS";
     private static final String RECIPE = "RECIPE";
     private static final String STEP_INDEX = "STEP_INDEX";
     private Recipe mRecipe;
@@ -28,6 +30,9 @@ public class DetailsActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getResources().getBoolean(R.bool.isTablet)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
         setContentView(R.layout.activity_details);
         this.mRecipeRepo = new RecipeRepoImpl(this, getSupportLoaderManager(), this);
         if(getIntent() == null) {
@@ -75,7 +80,7 @@ public class DetailsActivity extends AppCompatActivity
             args.putInt(STEP_INDEX, this.getStepIndex(step));
             fragmentDetailView.setArguments(args);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragmentDetailView)
+                    .replace(R.id.fragment_container, fragmentDetailView, FRAGMENT_DETAILS_VIEW_TAG)
                     .addToBackStack(null)
                     .commit();
         } else {
@@ -133,13 +138,14 @@ public class DetailsActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        FragmentDetailView fdv = (FragmentDetailView) getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_details_view);
-        if(!this.getResources().getBoolean(R.bool.isTablet)) {
+        FragmentDetailView fr = (FragmentDetailView) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_DETAILS_VIEW_TAG);
+        if (fr != null && fr.isVisible() && !this.getResources().getBoolean(R.bool.isTablet)) {
             getSupportFragmentManager().popBackStackImmediate();
             return;
         }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 }

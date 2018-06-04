@@ -40,6 +40,7 @@ public class FragmentDetailView extends Fragment
         implements ExoPlayer.EventListener, View.OnClickListener {
 
     private static final String RECIPE = "RECIPE", STEP_INDEX = "STEP_INDEX";
+    private static final String PLAYER_POSITION_KEY = "INDEX", PLAYER_STATE_KEY = "PLAYBACK_STATE";
     private Recipe mRecipe;
     private int mCurrentStepInd;
     private SimpleExoPlayer mExoPlayer;
@@ -51,6 +52,8 @@ public class FragmentDetailView extends Fragment
     ImageView mThumbnail;
     private static MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
+    private long mPlayerPosition = -1;
+    private int mPlaybackState = -1;
 
     public FragmentDetailView() {
     }
@@ -61,6 +64,8 @@ public class FragmentDetailView extends Fragment
         if(savedInstanceState != null) {
             this.mRecipe = savedInstanceState.getParcelable(RECIPE);
             this.mCurrentStepInd = savedInstanceState.getInt(STEP_INDEX);
+            this.mPlayerPosition = savedInstanceState.getLong(PLAYER_POSITION_KEY);
+            this.mPlaybackState = savedInstanceState.getInt(PLAYER_STATE_KEY);
         }
         if(getArguments() != null && getArguments().getParcelable(RECIPE) != null) {
             this.mRecipe = getArguments().getParcelable(RECIPE);
@@ -82,9 +87,14 @@ public class FragmentDetailView extends Fragment
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.releasePlayer();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(RECIPE, this.mRecipe);
+        outState.putInt(STEP_INDEX, this.mCurrentStepInd);
+        this.mPlayerPosition = this.mExoPlayer.getCurrentPosition();
+        outState.putLong(PLAYER_POSITION_KEY, this.mPlayerPosition);
+        this.mPlaybackState = this.mExoPlayer.getPlaybackState();
+        outState.putInt(PLAYER_STATE_KEY, this.mPlaybackState);
     }
 
     @Override
@@ -192,8 +202,12 @@ public class FragmentDetailView extends Fragment
         }
         MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                 getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
+        if(this.mPlayerPosition != -1) {
+            this.mExoPlayer.seekTo(this.mPlayerPosition);
+        }
         this.mExoPlayer.prepare(mediaSource);
-        this.mExoPlayer.setPlayWhenReady(false);
+        boolean playWhenReady = this.mPlaybackState == 3;
+        this.mExoPlayer.setPlayWhenReady(playWhenReady);
     }
 
     private void initializeMediaSession() {
@@ -225,6 +239,39 @@ public class FragmentDetailView extends Fragment
             }
         });
         mMediaSession.setActive(true);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(this.mRecipe != null && this.mCurrentStepInd != -1) {
+            this.setContent(mRecipe.getSteps().get(this.mCurrentStepInd));
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.releasePlayer();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        this.releasePlayer();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.releasePlayer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        this.releasePlayer();
     }
 
     private void releasePlayer() {
