@@ -26,9 +26,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "URL", "\"http://10.0.2.2:8080/_ah/api/\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "URL", "\"dev.example.com\""
         }
     }
 
@@ -52,10 +56,12 @@ dependencies {
     endpointsServer project(path: ':backend', configuration: 'endpoints')
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.google.api-client:google-api-client:1.23.0'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.google.http-client:google-http-client-android:1.23.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.1'
+
+    freeImplementation 'com.google.android.gms:play-services-ads:15.0.1'
 
     implementation project(":jokeProviderLib")
     implementation project(":jokeDisplayLib")

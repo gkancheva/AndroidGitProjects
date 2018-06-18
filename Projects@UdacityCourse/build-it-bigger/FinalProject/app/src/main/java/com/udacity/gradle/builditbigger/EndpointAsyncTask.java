@@ -3,6 +3,7 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
 
+    private static final String TAG = EndpointAsyncTask.class.getSimpleName();
     private static MyApi mMyApiService = null;
     private Context mContext;
     private EndpointAsyncTaskListener mListener;
@@ -29,7 +31,7 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
         if(mMyApiService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                    .setRootUrl(BuildConfig.URL)
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -43,12 +45,17 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
         try {
             return mMyApiService.provideJoke().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            Log.e(TAG, e.getMessage());
+            return null;
         }
     }
 
     @Override
     protected void onPostExecute(String joke) {
+        if(joke == null) {
+            Toast.makeText(mContext, R.string.error_message, Toast.LENGTH_SHORT).show();
+            return;
+        }
         this.mListener.onJokeSuccess(joke);
         Toast.makeText(mContext, joke, Toast.LENGTH_LONG).show();
     }
