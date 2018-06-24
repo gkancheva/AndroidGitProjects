@@ -25,4 +25,5 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
     <color name="textGray">#6000</color>
+    <color name="textTransparent">#00000000</color>
 </resources>

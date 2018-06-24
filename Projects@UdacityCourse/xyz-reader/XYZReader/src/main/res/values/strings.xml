@@ -8,5 +8,7 @@
     <string name="action_share">Share</string>
 
     <string name="up">Up</string>
+    <string name="book_picture">Book picture</string>
+    <string name="error_loading_details">Error on loading details</string>
 
 </resources>
